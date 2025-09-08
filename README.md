@@ -1,5 +1,5 @@
 # Delta-Hedging-Simulator
-A Python script that simulates the dynamic delta hedging of a long non-dividend paying European call option. This project investigates the P&amp;L of a hedging strategy and how it is driven by the difference between the implied volatility, used for option pricing and hedging, and the realised volatility of the simulated path.
+A Python script that simulates the dynamic delta hedging of a long non-dividend paying European call option. This project investigates the P&L of a hedging strategy and how it is driven by the difference between the implied volatility, used for option pricing and hedging, and the realised volatility of the simulated path.
 
 In this project we will be exploring the applications of a form of delta hedging wherein we maintain a delta neutral portfolio in order to isolate the affect volatility has on PnL. In this way we are trading volatility rather than stock movement. 
 
@@ -15,14 +15,14 @@ By defining function F(S,t)=ln(S), we can apply Ito's Lemma and after integratin
 $$
 \ln\left(\frac{S_t}{S_0}\right) = \left(\mu - \tfrac{1}{2}\sigma^2\right)t + \sigma W_t
 $$
-From this, it is clear that due to the derministic dt term and by the fact that \sigma dW_t has a mean of 0 and a variance of \sigma^2 T, \ln\left(\frac{S_t}{S_0}\right) follows a normal distribution with mean (\mu - 1/2 \sigma^2)T and a variance of \sigma^2 T. We say that stock price has a lognormal distribution because of this. We then exponentiate each side of this equation to get the closed form solution for stock price evolution:
+From this, it is clear that due to the derministic dt term and by the fact that $\sigma dW_t$ has a mean of 0 and a variance of $\sigma^2 T$, $\ln\left(\frac{S_t}{S_0}\right)$ follows a normal distribution with mean $(\mu - 1/2 \sigma^2)T$ and a variance of $\sigma^2 T$. We say that stock price has a lognormal distribution because of this. We then exponentiate each side of this equation to get the closed form solution for stock price evolution:
 $$
 S_t = S_0 \exp\left( \left( \mu - \tfrac{1}{2}\sigma^2 \right)t + \sigma W_t \right)
 $$
 
-The derivation above describes the real world evolution of stock price as characterised by the drift term \mu. When pricing deivatives such as European call options, we change the measure to the risk-neutral, Q. In this measure, the Black-Scholes assumption of no-arbitrage is satisfied. We will next discuss how call price, delta, and path generation are calculated in the risk-neutral measure.
+The derivation above describes the real world evolution of stock price as characterised by the drift term $\mu$. When pricing deivatives such as European call options, we change the measure to the risk-neutral, Q. In this measure, the Black-Scholes assumption of no-arbitrage is satisfied. We will next discuss how path generation is carried out and how call price and delta are calculated in the risk-neutral measure.
 
-To find a continuous time evolution of stock price S_t under the risk-neutral measure, we need to go back to the real-world dS_t equation and replace dW_t with a new brownian motion $\widetilde{W}_t$ with relation to dW_t described by:
+To find a continuous time evolution of stock price $S_t$ under the risk-neutral measure, we need to go back to the real-world $dS_t$ equation and replace $dW_t$ with a new brownian motion $\widetilde{W}_t$ with relation to $dW_t$ described by:
 
 $$
 d\widetilde{W}_t = dW_t^{\mathbb{P}} + \frac{\mu - r}{\sigma}  dt
@@ -40,7 +40,7 @@ $$
 S_t = S_0 e^{(r - \frac{1}{2}\sigma^2)t + \sigma \widetilde{W}_t}
 $$
 
-This continuous time evolution can be adapted to a discrete time step evolution which we use to generate the stock paths in the script. We take discrete timesteps dt to calculate the next stock price movement- for now on, dt refers to this discrete timestep. To adapt this equation, we first recognise that dW_t has mean 0, variance dt and a normal distribution. To replace this term we use a standard normal random variable Z which is normally distributed with mean 0 and variance 1 and multiply it by \sqrt(dt) so the variance becomes dt. Over num_steps(number of timesteps) iterations we can generate our stock path from seed S_0:
+This continuous time evolution can be adapted to a discrete time step evolution which we use to generate the stock paths in the script. We take discrete timesteps dt to calculate the next stock price movement- in the code, dt only refers to this discrete timestep. To adapt this equation, we first recognise that $dW_t$ has mean 0, variance dt and a normal distribution. To replace this term we use a standard normal random variable Z which is normally distributed with mean 0 and variance 1 and multiply it by $\sqrt(dt)$ so the variance becomes dt. Over num_steps(number of timesteps) iterations we can generate our stock path from seed $S_0$:
 
 for t in range(1, num_steps+1):
         paths[t]=paths[t-1]*np.exp((r-0.5*sigma_real**2)*dt+sigma_real*Z[t-1]*np.sqrt(dt))
@@ -51,7 +51,7 @@ paths=np.zeros((num_steps+1, num_paths))
 
 We add an extra row so we can initialise the zeroth row with S_0 and so the remaining rows enumerate the timesteps. 
 
-You might notice that sigma_real was used in calculating each movement and not simply named 'sigma'. The aim of this project is to isolate and investigate the affect volatility has on the average PnL over all paths, and to do so we simulate stock movements with sigma_real or realised volatility and use sigma_imp or implied volatility to calculate current call price and the delta of S_t at each timestep. In short, implied volatility is calculated at t=0 and measures the expected future volatility of the underlying stock at T, whereas realised volatility is the actual volatility the stock price experiences. With a sufficiently large number of paths generated over a sufficiently large number of timesteps(for accurate average PnL's), the trading strategy used in this project makes profit for sigma_imp<sigma_real and a loss for sigma_imp>sigma_real. In this way we are long on volatility and are betting on realised volatility beating market expectation.
+You might notice that sigma_real was used in calculating each movement and not simply named 'sigma'. The aim of this project is to isolate and investigate the affect volatility has on the average PnL over all paths, and to do so we simulate stock movements with sigma_real or realised volatility and use sigma_imp or implied volatility to calculate current call price and the delta of $S_t$ at each timestep. In short, implied volatility is calculated at t=0 and measures the expected future volatility of the underlying stock at T, whereas realised volatility is the actual volatility the stock price experiences. With a sufficiently large number of paths generated over a sufficiently large number of timesteps(for accurate average PnL's), the trading strategy used in this project makes profit for sigma_imp$<$sigma_real and a loss for sigma_imp>sigma_real. In this way we are long on volatility and are betting on realised volatility beating market expectation.
 
 Under Q, the price of a derivative is its discounted expected payoff. For a European call:
 $$
@@ -62,9 +62,9 @@ This pricing ensures no arbitrage in a complete market to fit the criteria for t
 There are two main methods to find the closed form solution for c; by solving the Black-Scholes PDE or the risk-neutral approach. The latter is what we will use since we have not yet derived the PDE and have the correct setup to solve using expectations. 
 
 We can write the payoff of a call option as
-\[
+$$
 \max(S_T - K, 0) = (S_T - K)\mathbf{1}_{\{S_T > K\}}.
-\]
+$$
 
 Taking expectations under the risk-neutral measure $\mathbb{Q}$ gives
 \[
