@@ -69,19 +69,22 @@ This pricing ensures no arbitrage in a complete market to fit the criteria for t
 There are two main methods to find the closed form solution for c; by solving the Black-Scholes PDE or the risk-neutral approach. The latter is what we will use since we have not yet derived the PDE and have the correct setup to solve using expectations. 
 
 We can write the payoff of a call option as
+
 $$
 \max(S_T - K, 0) = (S_T - K)\mathbf{1}_{\{S_T > K\}}.
 $$
 
 Taking expectations under the risk-neutral measure $\mathbb{Q}$ gives
-\[
+
+$$
 c_0 = e^{-rT} \, \mathbb{E}^\mathbb{Q}\left[ (S_T - K)\mathbf{1}_{\{S_T > K\}} \right].
-\]
+$$
 
 We split this into two terms:
-\[
+
+$$
 c_0 = e^{-rT} \Big( \mathbb{E}^\mathbb{Q}[ S_T \mathbf{1}_{\{S_T > K\}} ] - K \, \mathbb{E}^\mathbb{Q}[ \mathbf{1}_{\{S_T > K\}} ] \Big).
-\]
+$$
 
 To evaluate the second term, notice that
 
@@ -90,93 +93,119 @@ $$
 $$
 
 Using the closed-form solution for $S_T$ under $\mathbb{Q}$,
-\[
+
+$$
 S_T = S_0 \exp\!\Big( (r - \tfrac{1}{2}\sigma^2)T + \sigma \sqrt{T} Z \Big), 
 \quad Z \sim \mathcal{N}(0,1).
-\]
+$$
 
 The inequality $S_T > K$ becomes
-\[
+
+$$
 Z > \frac{\ln(K/S_0) - (r - \tfrac{1}{2}\sigma^2)T}{\sigma \sqrt{T}}.
-\]
+$$
 
 Define
-\[
+
+$$
 d_2 = \frac{\ln(S_0/K) + (r - \tfrac{1}{2}\sigma^2)T}{\sigma \sqrt{T}}.
-\]
+$$
 
 Then the inequality is equivalent to $Z > -d_2$, so
-\[
+
+$$
 \mathbb{Q}(S_T > K) = \mathbb{Q}(Z < d_2) = N(d_2),
-\]
+$$
+
 where $N(\cdot)$ is the CDF of a standard normal random variable.
 
 Thus, the second term becomes
-\[
-- K e^{-rT} N(d_2).
-\]
 
-For the first term we perform a change of measure. Define the probability measure \(\widetilde{\mathbb Q}\) by the Radon--Nikodym derivative
-\[
+$$
+- K e^{-rT} N(d_2).
+$$
+
+For the first term we perform a change of measure. Define the probability measure $(\widetilde{\mathbb Q}\)$ by the Radon-Nikodym derivative
+
+$$
 \frac{d\widetilde{\mathbb Q}}{d\mathbb Q}
 = \frac{S_T}{S_0 e^{rT}}.
-\]
-This is well-defined because \(\mathbb{E}^{\mathbb Q}[S_T] = S_0 e^{rT}\).
+$$
+
+This is well-defined because $\mathbb{E}^{\mathbb Q}[S_T] = S_0 e^{rT}$.
 
 Then
-\[
+
+$$
 \mathbb{E}^{\mathbb Q}[S_T\mathbf{1}_{\{S_T>K\}}]
 = S_0 e^{rT}\,\widetilde{\mathbb E}\!\big[\mathbf{1}_{\{S_T>K\}}\big]
 = S_0 e^{rT}\,\widetilde{\mathbb Q}(S_T>K).
-\]
-Dividing by the discount factor in \(c_0\) will cancel the \(e^{rT}\) when we combine terms below.
+$$
 
-Under \(\mathbb Q\) we may write \(S_T\) as
-\[
+Dividing by the discount factor in $c_0$ will cancel the $e^{rT}$ when we combine terms below.
+
+Under $\(\mathbb Q\)$ we may write $S_T$ as
+
+$$
 S_T = S_0\exp\!\Big((r-\tfrac12\sigma^2)T + \sigma\sqrt{T}\,Z\Big),\qquad Z\sim\mathcal{N}(0,1).
-\]
-The Radon--Nikodym derivative is therefore
-\[
+$$
+
+The Radon-Nikodym derivative is therefore
+
+$$
 \frac{d\widetilde{\mathbb Q}}{d\mathbb Q}
 = \exp\!\Big(-\tfrac12\sigma^2 T + \sigma\sqrt{T}\,Z\Big).
-\]
-This is the exponential tilt of a standard normal; it shifts the mean of \(Z\) by \(\sigma\sqrt{T}\). Equivalently, under \(\widetilde{\mathbb Q}\) the canonical normal becomes
-\[
-Z \sim \mathcal{N}(\sigma\sqrt{T},\,1).
-\]
+$$
 
-To compute \(\widetilde{\mathbb Q}(S_T>K)\) we solve the inequality as before:
-\[
+This is the exponential tilt of a standard normal; it shifts the mean of Z by $\(\sigma\sqrt{T}\)$. Equivalently, under $\widetilde{\mathbb Q}\$ the canonical normal becomes
+
+$$
+Z \sim \mathcal{N}(\sigma\sqrt{T},\,1).
+$$
+
+To compute $\widetilde{\mathbb Q}(S_T>K)\$ we solve the inequality as before:
+
+$$
 S_T > K
 \quad\Longleftrightarrow\quad
 \sigma\sqrt{T}\,Z > \ln(K/S_0) - (r-\tfrac12\sigma^2)T
-\]
-\[
+$$
+
+$$
 \Longleftrightarrow\quad
 Z > \frac{\ln(K/S_0) - (r-\tfrac12\sigma^2)T}{\sigma\sqrt{T}} = -d_1,
-\]
+$$
+
 where
-\[
+
+$$
 d_1 = \frac{\ln(S_0/K) + (r+\tfrac12\sigma^2)T}{\sigma\sqrt{T}}.
-\]
-Under \(\widetilde{\mathbb Q}\), since \(Z\sim\mathcal{N}(\sigma\sqrt{T},1)\), the event \(Z>-d_1\) has probability
-\[
+$$
+
+Under $\(\widetilde{\mathbb Q}\)$, since $\(Z\sim\mathcal{N}(\sigma\sqrt{T},1)\)$, the event $\(Z>-d_1\)$ has probability
+
+$$
 \widetilde{\mathbb Q}(Z>-d_1) = \Pr\!\big(Z' > -d_1 - \sigma\sqrt{T}\big)
 = \Pr\!\big(Z' > -d_1 - \sigma\sqrt{T}\big),
-\]
-where \(Z'\sim\mathcal{N}(0,1)\). After simplification this equals \(N(d_1)\). Hence
-\[
-\widetilde{\mathbb Q}(S_T>K) = N(d_1),
-\]
-and therefore the first term is
-\[
-\mathbb{E}^{\mathbb Q}[S_T\mathbf{1}_{\{S_T>K\}}] = S_0 e^{rT}\,N(d_1).
-\]
+$$
 
-Putting both terms together and discounting by \(e^{-rT}\) yields the Black--Scholes call price:
-\[
+where $\(Z'\sim\mathcal{N}(0,1)\)$. After simplification this equals $\(N(d_1)\)$. Hence
+
+$$
+\widetilde{\mathbb Q}(S_T>K) = N(d_1),
+$$
+
+and therefore the first term is
+
+$$
+\mathbb{E}^{\mathbb Q}[S_T\mathbf{1}_{\{S_T>K\}}] = S_0 e^{rT}\,N(d_1).
+$$
+
+Putting both terms together and discounting by $\(e^{-rT}\)$ yields the Black-Scholes call price:
+
+$$
 c_0 = e^{-rT}\Big(S_0 e^{rT} N(d_1) - K N(d_2) e^{rT}\Big) = S_0 N(d_1) - K e^{-rT} N(d_2).
-\]
+$$
 
 
 There are two main ways to trade volatility using delta hedging. The first being to short a call option and to buy delta shares, rebalancing portfolio by selling shares when stock price decreases and buying when stock price increases to ensure the portfolio stays delta neutral. The second being to buy a call and to short delta shares and in order to keep portfolio delta neutral we buy when stock price decreases and sell when stock price increases. We will be using the latter in this project.
