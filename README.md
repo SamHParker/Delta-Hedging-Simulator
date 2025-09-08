@@ -64,7 +64,7 @@ $$
 c_0 = e^{-rT} \cdot \mathbb{E}^{\mathbb{Q}}\left[ \max(S_T - K, 0) \right]
 $$
 
-This pricing ensures no arbitrage in a complete market to fit the criteria for the the Black-Scholes models assumptions; If we buy a call at T=0 we have -c_0 in our cash account which grows to -$ \mathbb{E}^{\mathbb{Q}}\left[ \max(S_T - K, 0) \right]$ at maturity. Since this is the negative of our expected payoff, the total profit a trader can expect from buying a call is exactly 0, thus no arbitrage opportunities.
+This pricing ensures no arbitrage in a complete market to fit the criteria for the the Black-Scholes models assumptions; If we buy a call at T=0 we have -c_0 in our cash account which grows to $- \mathbb{E}^{\mathbb{Q}}\left[ \max(S_T - K, 0) \right]$ at maturity. Since this is the negative of our expected payoff, the total profit a trader can expect from buying a call is exactly 0, thus no arbitrage opportunities.
 
 There are two main methods to find the closed form solution for c; by solving the Black-Scholes PDE or the risk-neutral approach. The latter is what we will use since we have not yet derived the PDE and have the correct setup to solve using expectations. 
 
