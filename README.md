@@ -36,7 +36,9 @@ $$
 
 Which is solved in the same way as before. We achieve the closed form solution for stock evolution S_t under Q:
 m
-$S_t = S_0 e^{(r - \frac{1}{2}\sigma^2)t + \sigma \widetilde{W}_t}$
+$$
+S_t = S_0 e^{(r - \frac{1}{2}\sigma^2)t + \sigma \widetilde{W}_t}
+$$
 
 This continuous time evolution can be adapted to a discrete time step evolution which we use to generate the stock paths in the script. We take discrete timesteps dt to calculate the next stock price movement- for now on, dt refers to this discrete timestep. To adapt this equation, we first recognise that dW_t has mean 0, variance dt and a normal distribution. To replace this term we use a standard normal random variable Z which is normally distributed with mean 0 and variance 1 and multiply it by \sqrt(dt) so the variance becomes dt. Over num_steps(number of timesteps) iterations we can generate our stock path from seed S_0:
 
