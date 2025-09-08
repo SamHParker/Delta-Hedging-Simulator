@@ -78,9 +78,10 @@ c_0 = e^{-rT} \Big( \mathbb{E}^\mathbb{Q}[ S_T \mathbf{1}_{\{S_T > K\}} ] - K \,
 \]
 
 To evaluate the second term, notice that
-\[
+
+$$
 \mathbb{E}^\mathbb{Q}[ \mathbf{1}_{\{S_T > K\}} ] = \mathbb{Q}(S_T > K).
-\]
+$$
 
 Using the closed-form solution for $S_T$ under $\mathbb{Q}$,
 \[
