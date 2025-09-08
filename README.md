@@ -8,13 +8,17 @@ Firstly, I must introduce the Black-Scholes-Merton model used in this project an
 Delta(Δ) measures the sensitivity of the option price to the underlying stock price. Mathematically, it's the partial derivative of option value with respect to stock price. For a call option, Δ ranges from 0 to 1; for a put, from -1 to 0. In Black-Scholes, delta also has a probabilistic interpretation: it can be seen as the approximate probability that the option finishes in the money(eg. -0.25 for put and 0.25 for call delta corresponds to a 25% chance of the option finishing in the money). For call options, delta increases with a stock price increases, reflecting higher probability of the call expiring in the money. For put options, delta decreases with an increase in stock price, reflecting the lower probability of the put expiring in the money. This projects focus is on delta hedging a call European option, a type of option which can only be executed at maturity, but the code can be adapted for a European put option instead.
 
 The model used to price the call and calculate deltas is the Black-Scholes-Merton model. This model assumes that stock price follows a geometric Brownian motion, meaning returns are normally distributed and prices evolve continuously with both a deterministic drift term $\mu S_t dt$ and a stochastic term $\sigma S_t dW_t$ driven by Weiner process $W_t$:
+
 $$
 dS_t= \mu S_t dt+ \sigma S_t dW_t
 $$
+
 By defining function F(S,t)=ln(S), we can apply Ito's Lemma and after integrating over time from 0 to t we come to this equation:
+
 $$
 \ln\left(\frac{S_t}{S_0}\right) = \left(\mu - \tfrac{1}{2}\sigma^2\right)t + \sigma W_t
 $$
+
 From this, it is clear that due to the derministic dt term and by the fact that $\sigma dW_t$ has a mean of 0 and a variance of $\sigma^2 T$, $\ln\left(\frac{S_t}{S_0}\right)$ follows a normal distribution with mean $(\mu - 1/2 \sigma^2)T$ and a variance of $\sigma^2 T$. We say that stock price has a lognormal distribution because of this. We then exponentiate each side of this equation to get the closed form solution for stock price evolution:
 
 $$
@@ -50,14 +54,16 @@ Before this loop, we must define variables num_steps and num_paths simulate mult
 
 paths=np.zeros((num_steps+1, num_paths))
 
-We add an extra row so we can initialise the zeroth row with S_0 and so the remaining rows enumerate the timesteps. 
+We add an extra row so we can initialise the zeroth row with $S_0$ and so the remaining rows enumerate the timesteps. 
 
 You might notice that sigma_real was used in calculating each movement and not simply named 'sigma'. The aim of this project is to isolate and investigate the affect volatility has on the average PnL over all paths, and to do so we simulate stock movements with sigma_real or realised volatility and use sigma_imp or implied volatility to calculate current call price and the delta of $S_t$ at each timestep. In short, implied volatility is calculated at t=0 and measures the expected future volatility of the underlying stock at T, whereas realised volatility is the actual volatility the stock price experiences. With a sufficiently large number of paths generated over a sufficiently large number of timesteps(for accurate average PnL's), the trading strategy used in this project makes profit for sigma_imp$<$sigma_real and a loss for sigma_imp>sigma_real. In this way we are long on volatility and are betting on realised volatility beating market expectation.
 
 Under Q, the price of a derivative is its discounted expected payoff. For a European call:
+
 $$
 c_0 = e^{-rT} \cdot \mathbb{E}^{\mathbb{Q}}\left[ \max(S_T - K, 0) \right]
 $$
+
 This pricing ensures no arbitrage in a complete market to fit the criteria for the the Black-Scholes models assumptions; If we buy a call at T=0 we have -c_0 in our cash account which grows to -$ \mathbb{E}^{\mathbb{Q}}\left[ \max(S_T - K, 0) \right]$ at maturity. Since this is the negative of our expected payoff, the total profit a trader can expect from buying a call is exactly 0, thus no arbitrage opportunities.
 
 There are two main methods to find the closed form solution for c; by solving the Black-Scholes PDE or the risk-neutral approach. The latter is what we will use since we have not yet derived the PDE and have the correct setup to solve using expectations. 
