@@ -140,7 +140,7 @@ $$
 = S_0 e^{rT}\widetilde{\mathbb Q}(S_T>K).
 $$
 
-Under \mathbb{Q} we may write $S_T$ as
+Under $\mathbb{Q}$ we may write $S_T$ as
 
 $$
 S_T = S_0\exp\Big((r-\tfrac12\sigma^2)T + \sigma\sqrt{T} Z\Big)
