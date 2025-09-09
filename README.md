@@ -140,13 +140,13 @@ $$
 = S_0 e^{rT}\widetilde{\mathbb Q}(S_T>K).
 $$
 
-Under Q we may write $S_T$ as
+Under \mathbb{Q} we may write $S_T$ as
 
 $$
-S_T = S_0\exp\Big((r-\tfrac12\sigma^2)T + \sigma\sqrt{T} Z\Big),  Z\sim\mathcal{N}(0,1).
+S_T = S_0\exp\Big((r-\tfrac12\sigma^2)T + \sigma\sqrt{T} Z\Big)
 $$
 
-Under the measure $\widetilde{\mathbb{Q}}^S$, the drift of $\ln S_T$ increases by $\sigma^2 T$ compared to $\mathbb{Q}$. Therefore, the dynamics become:
+Under the measure $\widetilde{\mathbb{Q}}$, the drift of $\ln S_T$ increases by $\sigma^2 T$ compared to $\mathbb{Q}$. Therefore, $S_T$ becomes:
 
 $$
 S_T = S_0 \exp\left( (r + \tfrac{1}{2}\sigma^2)T + \sigma \sqrt{T} Z \right),
