@@ -138,11 +138,9 @@ Then
 
 $$
 \mathbb{E}^{\mathbb Q}[S_T\mathbf{1}_{\{S_T>K\}}]
-= S_0 e^{rT}\,\widetilde{\mathbb E}\!\big[\mathbf{1}_{\{S_T>K\}}\big]
-= S_0 e^{rT}\,\widetilde{\mathbb Q}(S_T>K).
+= S_0 e^{rT}\widetilde{\mathbb E}\big[\mathbf{1}_{\{S_T>K\}}\big]
+= S_0 e^{rT}\widetilde{\mathbb Q}(S_T>K).
 $$
-
-Multiplying by the discount factor in $c_0$ will cancel the $e^{rT}$ when we combine terms below.
 
 Under $\(\mathbb Q\)$ we may write $S_T$ as
 
@@ -154,7 +152,7 @@ The Radon-Nikodym derivative is therefore
 
 $$
 \frac{d\widetilde{\mathbb Q}}{d\mathbb Q}
-= \exp\!\Big(-\tfrac12\sigma^2 T + \sigma\sqrt{T}\,Z\Big).
+= \exp\Big(-\tfrac12\sigma^2 T + \sigma\sqrt{T}\Z\Big)
 $$
 
 This is the exponential tilt of a standard normal; it shifts the mean of Z by $\sigma\sqrt{T}\$. Equivalently, under $\widetilde{\mathbb Q}\$ the canonical normal becomes
