@@ -158,7 +158,7 @@ $$
 This is the exponential tilt of a standard normal; it shifts the mean of Z by $\sigma\sqrt{T}\$. Equivalently, under $\widetilde{\mathbb Q}\$ the canonical normal becomes
 
 $$
-Z \sim \mathcal{N}(\sigma\sqrt{T},\1).
+Z \sim \mathcal{N}(\sigma\sqrt{T}, 1).
 $$
 
 To compute $\widetilde{\mathbb Q}(S_T>K)\$ we solve the inequality as before:
@@ -166,7 +166,7 @@ To compute $\widetilde{\mathbb Q}(S_T>K)\$ we solve the inequality as before:
 $$
 S_T > K
 \quad\Longleftrightarrow\quad
-\sigma\sqrt{T}\Z > \ln(K/S_0) - (r-\tfrac12\sigma^2)T
+\sigma\sqrt{T} Z > \ln(K/S_0) - (r-\tfrac12\sigma^2)T
 $$
 
 $$
