@@ -157,12 +157,12 @@ To compute $\widetilde{\mathbb Q}(S_T>K)\$ we solve the inequality similarly to 
 $$
 S_T > K
 \quad\Longleftrightarrow\quad
-\sigma\sqrt{T} Z > \ln(K/S_0) - (r-\tfrac12\sigma^2)T
+\sigma\sqrt{T} Z > \ln(K/S_0) - (r+\tfrac12\sigma^2)T
 $$
 
 $$
 \Longleftrightarrow\quad
-Z > \frac{\ln(K/S_0) - (r-\tfrac12\sigma^2)T}{\sigma\sqrt{T}} = -d_1,
+Z > \frac{\ln(K/S_0) - (r+\tfrac12\sigma^2)T}{\sigma\sqrt{T}} = -d_1,
 $$
 
 where
