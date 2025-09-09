@@ -122,7 +122,7 @@ where $N(\cdot)$ is the CDF of a standard normal random variable.
 Thus, the second term becomes
 
 $$
-- K e^{-rT} N(d_2).
+-K e^{-rT} N(d_2).
 $$
 
 For the first term we perform a change of measure. Define the probability measure $(\widetilde{\mathbb Q}\)$ by the Radon-Nikodym derivative
