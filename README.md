@@ -77,13 +77,13 @@ $$
 Taking expectations under the risk-neutral measure $\mathbb{Q}$ gives
 
 $$
-c_0 = e^{-rT} \, \mathbb{E}^\mathbb{Q}\left[ (S_T - K)\mathbf{1}_{\{S_T > K\}} \right].
+c_0 = e^{-rT} \mathbb{E}^\mathbb{Q}\left[ (S_T - K)\mathbf{1}_{\{S_T > K\}} \right].
 $$
 
 We split this into two terms:
 
 $$
-c_0 = e^{-rT} \Big( \mathbb{E}^\mathbb{Q}[ S_T \mathbf{1}_{\{S_T > K\}} ] - K \, \mathbb{E}^\mathbb{Q}[ \mathbf{1}_{\{S_T > K\}} ] \Big).
+c_0 = e^{-rT} \Big( \mathbb{E}^\mathbb{Q}[ S_T \mathbf{1}_{\{S_T > K\}} ] - K \mathbb{E}^\mathbb{Q}[ \mathbf{1}_{\{S_T > K\}} ] \Big).
 $$
 
 To evaluate the second term, notice that
@@ -95,7 +95,7 @@ $$
 Using the closed-form solution for $S_T$ under $\mathbb{Q}$,
 
 $$
-S_T = S_0 \exp\!\Big( (r - \tfrac{1}{2}\sigma^2)T + \sigma \sqrt{T} Z \Big), 
+S_T = S_0 \exp\Big( (r - \tfrac{1}{2}\sigma^2)T + \sigma \sqrt{T} Z \Big), 
 \quad Z \sim \mathcal{N}(0,1).
 $$
 
