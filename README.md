@@ -185,7 +185,7 @@ $$
 So
 
 $$
-\widetilde{\mathbb Q}(S_T>K) = N(d_1),
+\widetilde{\mathbb Q}(S_T>K) = \widetilde{\mathbb{Q}}(Z > -d_1) \;=\; \widetilde{\mathbb{Q}}(Z < d_1)=N(d_1),
 $$
 
 and therefore the first term is
