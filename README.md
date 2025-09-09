@@ -189,7 +189,7 @@ $$
 and therefore the first term is
 
 $$
-\mathbb{E}^{\mathbb Q}[S_T\mathbf{1}_{\{S_T>K\}}] = S_0 e^{rT}\N(d_1).
+\mathbb{E}^{\mathbb Q}[S_T\mathbf{1}_{\{S_T>K\}}] = S_0 e^{rT} N(d_1).
 $$
 
 Putting both terms together and discounting by $\(e^{-rT}\)$ yields the Black-Scholes call price:
