@@ -152,7 +152,7 @@ The Radon-Nikodym derivative is therefore
 
 $$
 \frac{d\widetilde{\mathbb Q}}{d\mathbb Q}
-= \exp\Big(-\tfrac12\sigma^2 T + \sigma\sqrt{T}\Z\Big)
+= \exp\Big(-\tfrac12\sigma^2 T + \sigma\sqrt{T} Z\Big)
 $$
 
 This is the exponential tilt of a standard normal; it shifts the mean of Z by $\sigma\sqrt{T}\$. Equivalently, under $\widetilde{\mathbb Q}\$ the canonical normal becomes
