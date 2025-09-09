@@ -142,12 +142,12 @@ $$
 = S_0 e^{rT}\,\widetilde{\mathbb Q}(S_T>K).
 $$
 
-Dividing by the discount factor in $c_0$ will cancel the $e^{rT}$ when we combine terms below.
+Multiplying by the discount factor in $c_0$ will cancel the $e^{rT}$ when we combine terms below.
 
 Under $\(\mathbb Q\)$ we may write $S_T$ as
 
 $$
-S_T = S_0\exp\!\Big((r-\tfrac12\sigma^2)T + \sigma\sqrt{T}\,Z\Big),\qquad Z\sim\mathcal{N}(0,1).
+S_T = S_0\exp\Big((r-\tfrac12\sigma^2)T + \sigma\sqrt{T}\Z\Big),\qquad Z\sim\mathcal{N}(0,1).
 $$
 
 The Radon-Nikodym derivative is therefore
@@ -157,10 +157,10 @@ $$
 = \exp\!\Big(-\tfrac12\sigma^2 T + \sigma\sqrt{T}\,Z\Big).
 $$
 
-This is the exponential tilt of a standard normal; it shifts the mean of Z by $\(\sigma\sqrt{T}\)$. Equivalently, under $\widetilde{\mathbb Q}\$ the canonical normal becomes
+This is the exponential tilt of a standard normal; it shifts the mean of Z by $\sigma\sqrt{T}\$. Equivalently, under $\widetilde{\mathbb Q}\$ the canonical normal becomes
 
 $$
-Z \sim \mathcal{N}(\sigma\sqrt{T},\,1).
+Z \sim \mathcal{N}(\sigma\sqrt{T},\1).
 $$
 
 To compute $\widetilde{\mathbb Q}(S_T>K)\$ we solve the inequality as before:
@@ -168,7 +168,7 @@ To compute $\widetilde{\mathbb Q}(S_T>K)\$ we solve the inequality as before:
 $$
 S_T > K
 \quad\Longleftrightarrow\quad
-\sigma\sqrt{T}\,Z > \ln(K/S_0) - (r-\tfrac12\sigma^2)T
+\sigma\sqrt{T}\Z > \ln(K/S_0) - (r-\tfrac12\sigma^2)T
 $$
 
 $$
@@ -185,13 +185,13 @@ $$
 So
 
 $$
-\widetilde{\mathbb Q}(S_T>K) = \widetilde{\mathbb{Q}}(Z > -d_1) \;=\; \widetilde{\mathbb{Q}}(Z < d_1)=N(d_1),
+\widetilde{\mathbb Q}(S_T>K) = \widetilde{\mathbb{Q}}(Z > -d_1) \=\ \widetilde{\mathbb{Q}}(Z < d_1)=N(d_1),
 $$
 
 and therefore the first term is
 
 $$
-\mathbb{E}^{\mathbb Q}[S_T\mathbf{1}_{\{S_T>K\}}] = S_0 e^{rT}\,N(d_1).
+\mathbb{E}^{\mathbb Q}[S_T\mathbf{1}_{\{S_T>K\}}] = S_0 e^{rT}\N(d_1).
 $$
 
 Putting both terms together and discounting by $\(e^{-rT}\)$ yields the Black-Scholes call price:
