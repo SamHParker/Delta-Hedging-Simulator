@@ -33,7 +33,7 @@ $$
 d\widetilde{W}_t = dW_t^{\mathbb{P}} + \frac{\mu - r}{\sigma}  dt
 $$
 
-This gives us a stochastic process for dS_t in the measure Q:
+This gives us a stochastic process for $dS_t$ in the measure Q:
 
 $$
 dS_t = r S_t  dt + \sigma S_t  d\widetilde{W}_t
@@ -56,7 +56,7 @@ paths=np.zeros((num_steps+1, num_paths))
 
 We add an extra row so we can initialise the zeroth row with $S_0$ and so the remaining rows enumerate the timesteps. 
 
-You might notice that sigma_real was used in calculating each movement and not simply named 'sigma'. The aim of this project is to isolate and investigate the affect volatility has on the average PnL over all paths, and to do so we simulate stock movements with sigma_real or realised volatility and use sigma_imp or implied volatility to calculate current call price and the delta of $S_t$ at each timestep. In short, implied volatility is calculated at t=0 and measures the expected future volatility of the underlying stock at T, whereas realised volatility is the actual volatility the stock price experiences. With a sufficiently large number of paths generated over a sufficiently large number of timesteps(for accurate average PnL's), the trading strategy used in this project makes profit for sigma_imp$<$sigma_real and a loss for sigma_imp>sigma_real. In this way we are long on volatility and are betting on realised volatility beating market expectation.
+You might notice that sigma_real was used in calculating each movement and not simply named 'sigma'. The aim of this project is to isolate and investigate the affect volatility has on the average PnL over all paths, and to do so we simulate stock movements with sigma_real or realised volatility and use sigma_imp or implied volatility to calculate current call price and the delta of $S_t$ at each timestep. In short, implied volatility is calculated at t=0 and measures the expected future volatility of the underlying stock at T, whereas realised volatility is the actual volatility the stock price experiences. With a sufficiently large number of paths generated over a sufficiently large number of timesteps(for accurate average PnL's), the trading strategy used in this project makes profit for $sigma_imp<sigma_real$ and a loss for sigma_imp>sigma_real. In this way we are long on volatility and are betting on realised volatility beating market expectation.
 
 Under Q, the price of a derivative is its discounted expected payoff. For a European call:
 
@@ -64,7 +64,7 @@ $$
 c_0 = e^{-rT} \cdot \mathbb{E}^{\mathbb{Q}}\left[ \max(S_T - K, 0) \right]
 $$
 
-This pricing ensures no arbitrage in a complete market to fit the criteria for the the Black-Scholes models assumptions; If we buy a call at T=0 we have -c_0 in our cash account which grows to $- \mathbb{E}^{\mathbb{Q}}\left[ \max(S_T - K, 0) \right]$ at maturity. Since this is the negative of our expected payoff, the total profit a trader can expect from buying a call is exactly 0, thus no arbitrage opportunities.
+This pricing ensures no arbitrage in a complete market to fit the criteria for the the Black-Scholes models assumptions; If we buy a call at T=0 we have $-c_0$ in our cash account which grows to $- \mathbb{E}^{\mathbb{Q}}\left[ \max(S_T - K, 0) \right]$ at maturity. Since this is the negative of our expected payoff, the total profit a trader can expect from buying a call is exactly 0, thus no arbitrage opportunities.
 
 There are two main methods to find the closed form solution for c; by solving the Black-Scholes PDE or the risk-neutral approach. The latter is what we will use since we have not yet derived the PDE and have the correct setup to solve using expectations. 
 
