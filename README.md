@@ -145,7 +145,7 @@ $$
 Under $\(\mathbb Q\)$ we may write $S_T$ as
 
 $$
-S_T = S_0\exp\Big((r-\tfrac12\sigma^2)T + \sigma\sqrt{T}\Z\Big),\qquad Z\sim\mathcal{N}(0,1).
+S_T = S_0\exp\Big((r-\tfrac12\sigma^2)T + \sigma\sqrt{T}\Z\Big),Z\sim\mathcal{N}(0,1).
 $$
 
 The Radon-Nikodym derivative is therefore
