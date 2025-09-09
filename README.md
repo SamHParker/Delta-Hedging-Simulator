@@ -189,5 +189,24 @@ $$
 c_0 = e^{-rT}\Big(S_0 e^{rT} N(d_1) - K N(d_2) e^{rT}\Big) = S_0 N(d_1) - K e^{-rT} N(d_2).
 $$
 
+If we want to find the price of a non-dividend paying European put, we can use the put-call parity:
 
-There are two main ways to trade volatility using delta hedging. The first being to short a call option and to buy delta shares, rebalancing portfolio by selling shares when stock price decreases and buying when stock price increases to ensure the portfolio stays delta neutral. The second being to buy a call and to short delta shares and in order to keep portfolio delta neutral we buy when stock price decreases and sell when stock price increases. We will be using the latter in this project.
+$$
+p_0 = c_0 + K e^{-rT} - S_0 = S_0 N(d_1) - K e^{-rT} N(d_2) + K e^{-rT} - S_0.
+$$
+
+Simplifying, we obtain:
+
+$$
+p_0 = K e^{-rT} \big(1 - N(d_2)\big) - S_0 \big(1 - N(d_1)\big) = K e^{-rT} N(-d_2) - S_0 N(-d_1),
+$$
+
+since $(1 - N(x) = N(-x)$ for the standard normal distribution.
+
+Now tha
+
+
+structure: explain how delta is calculated 
+explain trading strategy
+explain method to analyse PnLs
+
