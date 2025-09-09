@@ -182,14 +182,7 @@ $$
 d_1 = \frac{\ln(S_0/K) + (r+\tfrac12\sigma^2)T}{\sigma\sqrt{T}}.
 $$
 
-Under $\(\widetilde{\mathbb Q}\)$, since $\(Z\sim\mathcal{N}(\sigma\sqrt{T},1)\)$, the event $\(Z>-d_1\)$ has probability
-
-$$
-\widetilde{\mathbb Q}(Z>-d_1) = \Pr\!\big(Z' > -d_1 - \sigma\sqrt{T}\big)
-= \Pr\!\big(Z' > -d_1 - \sigma\sqrt{T}\big),
-$$
-
-where $\(Z'\sim\mathcal{N}(0,1)\)$. After simplification this equals $\(N(d_1)\)$. Hence
+So
 
 $$
 \widetilde{\mathbb Q}(S_T>K) = N(d_1),
