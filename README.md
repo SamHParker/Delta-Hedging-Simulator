@@ -39,7 +39,7 @@ $$
 dS_t = r S_t  dt + \sigma S_t  d\widetilde{W}_t
 $$
 
-Which is solved in the same way as before. We achieve the closed form solution for stock evolution S_t under Q:
+Which is solved in the same way as before. We achieve the closed form solution for stock evolution $S_t$ under Q:
 
 $$
 S_t = S_0 e^{(r - \frac{1}{2}\sigma^2)t + \sigma \widetilde{W}_t}
