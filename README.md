@@ -201,9 +201,94 @@ $$
 p_0 = K e^{-rT} \big(1 - N(d_2)\big) - S_0 \big(1 - N(d_1)\big) = K e^{-rT} N(-d_2) - S_0 N(-d_1),
 $$
 
-since $(1 - N(x) = N(-x)$ for the standard normal distribution.
+since $(1 - N(x)) = N(-x)$ for the standard normal distribution.
 
-Now tha
+Now that we have an expression for $c_0$, we can calculate $\delta$ using the partial derivative:
+
+$$
+\delta = \frac{\partial c_0}{\partial S_0} = \frac{\partial}{\partial S_0} \left( S_0 N(d_1) - K e^{-rT} N(d_2) \right).
+$$
+
+Recall that $d_1$ and $d_2$ are functions of $S_0$:
+
+$$
+d_1 = \frac{\ln(S_0/K) + (r + \tfrac{1}{2}\sigma^2)T}{\sigma \sqrt{T}}, \quad
+d_2 = d_1 - \sigma \sqrt{T}.
+$$
+
+Applying the product rule and chain rule:
+
+$$
+\delta = N(d_1) + S_0 \frac{\partial N(d_1)}{\partial S_0} - K e^{-rT} \frac{\partial N(d_2)}{\partial S_0}.
+$$
+
+Note that $\frac{\partial N(d_1)}{\partial S_0} = n(d_1) \frac{\partial d_1}{\partial S_0}$ and $\frac{\partial N(d_2)}{\partial S_0} = n(d_2) \frac{\partial d_2}{\partial S_0}$, where $n(x)$ is the standard normal density function. Compute the derivatives:
+
+$$
+\frac{\partial d_1}{\partial S_0} = \frac{1}{S_0 \sigma \sqrt{T}}, \quad
+\frac{\partial d_2}{\partial S_0} = \frac{1}{S_0 \sigma \sqrt{T}}.
+$$
+
+Substitute:
+
+$$
+\delta = N(d_1) + S_0 n(d_1) \cdot \frac{1}{S_0 \sigma \sqrt{T}} - K e^{-rT} n(d_2) \cdot \frac{1}{S_0 \sigma \sqrt{T}}.
+$$
+
+Simplify:
+
+$$
+\delta = N(d_1) + \frac{1}{\sigma \sqrt{T}} \left( n(d_1) - \frac{K e^{-rT}}{S_0} n(d_2) \right).
+$$
+
+It can be shown that $S_0 n(d_1) = K e^{-rT} n(d_2)$. To see this, note:
+
+$$
+n(d_1) = \frac{1}{\sqrt{2\pi}} e^{-d_1^2/2}, \quad
+n(d_2) = \frac{1}{\sqrt{2\pi}} e^{-d_2^2/2}.
+$$
+
+Since $d_2 = d_1 - \sigma \sqrt{T}$, we have:
+
+$$
+d_2^2 = d_1^2 - 2 d_1 \sigma \sqrt{T} + \sigma^2 T.
+$$
+
+Then,
+
+$$
+n(d_2) = n(d_1) \exp\left( d_1 \sigma \sqrt{T} - \tfrac{1}{2} \sigma^2 T \right).
+$$
+
+But from the definition of $d_1$:
+
+$$
+d_1 \sigma \sqrt{T} = \ln(S_0/K) + (r + \tfrac{1}{2}\sigma^2)T
+$$
+
+so:
+
+$$
+n(d_2) = n(d_1) \exp\left( \ln(S_0/K) + rT \right) = n(d_1) \cdot \frac{S_0}{K} e^{rT}.
+$$
+
+Therefore,
+
+$$
+K e^{-rT} n(d_2) = S_0 n(d_1).
+$$
+
+Substituting back, the terms in parentheses cancel:
+
+$$
+\delta = N(d_1) + \frac{1}{\sigma \sqrt{T}} \left( n(d_1) - n(d_1) \right) = N(d_1).
+$$
+
+Thus, the delta of a European call option is:
+
+$$
+\delta = N(d_1).
+$$
 
 
 structure: explain how delta is calculated 
