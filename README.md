@@ -119,10 +119,10 @@ $$
 
 where $N(\cdot)$ is the CDF of a standard normal random variable.
 
-Thus, the second term becomes
+Thus, the second term inside the bracket of the call price becomes
 
 $$
--K e^{-rT} N(d_2).
+-K N(d_2).
 $$
 
 For the first term we perform a change of measure. Define the stock measure $(\widetilde{\mathbb Q}\)$ by the Radon-Nikodym derivative
@@ -183,10 +183,10 @@ $$
 \mathbb{E}^{\mathbb Q}[S_T\mathbf{1}_{\{S_T>K\}}] = S_0 e^{rT} N(d_1).
 $$
 
-Putting both terms together and discounting by $\(e^{-rT}\)$ yields the Black-Scholes call price:
+Putting both terms together and discounting by $e^{-rT}$ yields the Black-Scholes call price:
 
 $$
-c_0 = e^{-rT}\Big(S_0 e^{rT} N(d_1) - K N(d_2) e^{rT}\Big) = S_0 N(d_1) - K e^{-rT} N(d_2).
+c_0 = e^{-rT}\Big(S_0 e^{rT} N(d_1) - K N(d_2)\Big) = S_0 N(d_1) - K e^{-rT} N(d_2).
 $$
 
 If we want to find the price of a non-dividend paying European put, we can use the put-call parity:
