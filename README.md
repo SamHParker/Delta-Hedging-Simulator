@@ -48,7 +48,8 @@ $$
 This continuous time evolution can be adapted to a discrete time step evolution which we use to generate the stock paths in the script. We take discrete timesteps dt to calculate the next stock price movement- in the code, dt only refers to this discrete timestep. To adapt this equation, we first recognise that $dW_t$ has mean 0, variance dt and a normal distribution. To replace this term we use a standard normal random variable Z which is normally distributed with mean 0 and variance 1 and multiply it by $\sqrt(dt)$ so the variance becomes dt. Over num_steps(number of timesteps) iterations we can generate our stock path from seed $S_0$:
 
 for t in range(1, num_steps+1):
-paths[t]=paths[t-1]*np.exp((r-0.5*sigma_real**2)*dt+sigma_real*Z[t-1]*np.sqrt(dt))
+            
+    paths[t]=paths[t-1]*np.exp((r-0.5*sigma_real**2)*dt+sigma_real*Z[t-1]*np.sqrt(dt))
 
 Before this loop, we must define variables num_steps and num_paths simulate multiple stock price evolutions over multiple timesteps. After defining dt=T/num_steps we create a matrix of zeros with dimensions (num_steps+1, num_paths): 
 
