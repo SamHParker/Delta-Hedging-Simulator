@@ -48,7 +48,7 @@ $$
 This continuous time evolution can be adapted to a discrete time step evolution which we use to generate the stock paths in the script. We take discrete timesteps dt to calculate the next stock price movement- in the code, dt only refers to this discrete timestep. To adapt this equation, we first recognise that $dW_t$ has mean 0, variance dt and a normal distribution. To replace this term we use a standard normal random variable Z which is normally distributed with mean 0 and variance 1 and multiply it by $\sqrt(dt)$ so the variance becomes dt. Over num_steps(number of timesteps) iterations we can generate our stock path from seed $S_0$:
 
 for t in range(1, num_steps+1):
-        paths[t]=paths[t-1]*np.exp((r-0.5*sigma_real**2)*dt+sigma_real*Z[t-1]*np.sqrt(dt))
+paths[t]=paths[t-1]*np.exp((r-0.5*sigma_real**2)*dt+sigma_real*Z[t-1]*np.sqrt(dt))
 
 Before this loop, we must define variables num_steps and num_paths simulate multiple stock price evolutions over multiple timesteps. After defining dt=T/num_steps we create a matrix of zeros with dimensions (num_steps+1, num_paths): 
 
@@ -290,6 +290,29 @@ $$
 \Delta = N(d_1).
 $$
 
+We now have all the right ingredients for our trading strategy. My chosen method of Delta-hedging is to buy a non-dividend paying European call option priced c_0, and borrow $\Delta_0 S_0$ worth of stock and instantly sell it, also known as shorting. The portfolio value at time 0 is $\Pi=c_0- \Delta_0 S_0$ and our cash account has value $cash= -c_0+\Delta_0 S_0$. At each timestep, the only action the trader takes is to rebalance the portfolio so that the short position is $\Delta_0 S_0$. This keeps the portfolio Delta-neutral, meaning our PnL is indifferent to stock price movements. Therefore our PnL is solely dependant on volatility beating market expectation to make a profit. The implied volatility is priced into the call bought at t=0, so if realised volatility is greater than implied volatility, we had bought $c_0$ at a premium. To rebalance, we sell stock if there's an increase in stock price and buy for a decrease in stock price, since Delta moves with stock price and we have a negative position of shares. We benefit from large swings in stock price. 
+
+This loop describes the hedging strategy, along with the cash accrued with a risk-free growth rate r:
+
+def delta_calculator(S,K,Tau,r,sigma_imp):
+        d1=((np.log(S/K)+(r+0.5*sigma_imp**2)*Tau)/(sigma_imp*np.sqrt(Tau)))
+        delta=norm.cdf(d1)
+        return delta
+    
+    deltas = np.zeros_like(paths)
+    
+    for i in range(0, num_steps):
+        deltas[i]=delta_calculator(paths[i],K,T-i*dt,r,sigma_imp)
+    deltas[-1]= (paths[-1]>K).astype(float)
+    
+    call_price = S0*norm.cdf((np.log(S0/K)+(r+0.5*sigma_imp**2)*T)/(sigma_imp*np.sqrt(T)))-K*np.exp(-r*T)*norm.cdf(((np.log(S0/K)+(r-0.5*sigma_imp**2)*T)/(sigma_imp*np.sqrt(T))))
+    cash_flow = np.zeros(num_paths)
+    cash_flow[:] = paths[0]*delta0 - call_price
+    
+    for n in range(1, num_steps+1):
+        hedge = paths[n]*(deltas[n]-deltas[n-1])
+        cash_flow *=exp_rdt
+        cash_flow += hedge
 
 structure: explain how delta is calculated 
 explain trading strategy
