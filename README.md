@@ -278,13 +278,13 @@ $$
 K e^{-rT} n(d_2) = S_0 n(d_1).
 $$
 
-Substituting back, the terms in parentheses cancel:
+Substituting back, the terms in brackets cancel:
 
 $$
 \Delta = N(d_1) + \frac{1}{\sigma \sqrt{T}} \left( n(d_1) - n(d_1) \right) = N(d_1).
 $$
 
-Thus, the delta of a European call option is:
+Thus, the Delta of a European call option is:
 
 $$
 \Delta = N(d_1).
