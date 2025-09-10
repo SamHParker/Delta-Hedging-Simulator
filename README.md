@@ -295,10 +295,10 @@ We now have all the right ingredients for our trading strategy. My chosen method
 
 This loop describes the hedging strategy, along with the cash accrued with a risk-free growth rate r:
 
-def delta_calculator(S,K,Tau,r,sigma_imp):
-        d1=((np.log(S/K)+(r+0.5*sigma_imp**2)*Tau)/(sigma_imp*np.sqrt(Tau)))
-        delta=norm.cdf(d1)
-        return delta
+     def delta_calculator(S,K,Tau,r,sigma_imp):
+            d1=((np.log(S/K)+(r+0.5*sigma_imp**2)*Tau)/(sigma_imp*np.sqrt(Tau)))
+            delta=norm.cdf(d1)
+            return delta
     
     deltas = np.zeros_like(paths)
     
