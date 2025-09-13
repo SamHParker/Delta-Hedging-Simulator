@@ -315,6 +315,42 @@ This loop describes the hedging strategy, along with the cash accrued with a ris
         cash_flow *=exp_rdt
         cash_flow += hedge
 
+We already have a matrix of stock prices at every time-step for each path so calculating the corresponding Deltas requires a calculator and a loop of its own as shown above. Since the call is either 100% in-the-money or 100% out-the-money at t=T, $\Delta$ is either 0 or 1. But we run into a problem since at t=T, $Tau = T-i dt$ so an error occurs if we use the calculator for the final row since we end up dividing by 0 to calculate d1, so we use the line deltas[-1]= (paths[-1]>K).astype(float) instead.
+
+We then initialise the cash account, called cash_flow here, with the initial hedge, paths[0]* delta0 minus the call price accross all paths and before hedging, we multiply cash_flow by the risk-free growth for time dt: exp_rdt=$\exp(r dt)$ defined earlier in the code (to avoid unnecessary recomputation). We then add paths[n]*(deltas[n]-deltas[n-1]) to the cash account which corresponds to buying or selling the correct amount of stock to rebalance the portfolio.
+
+We do these calculations for an array of different realised volatilities:
+
+      realised_vols=[.1,.15,.2,.23,.26,.31,.36,.41,.46,.51]
+
+We keep the following parameters constant: S0=238, sigma_imp=0.23 based on the current market data of an Apple stock. Choose T=1, so our call expires 1 year from the time bought. Finally, we use r=0.0385 which is the yield for a 1 year U.S Treasury bond. We may vary K to test the accuracy of the code in measuring volatility dependant average PnL's. 
+
+To calculate PnL per path, We consider the final amount in the cash account after hedging, excecuting the call if in the money, and finally closing our short position. After hedging is complete, we add money gained from trading the volatility of stock (+cash_flow). We then excecute the call if $\Delta_T=1$ ($+(S_T-K)$) and we close the postion by buying back shares shorted (-$\Delta_T S_T$). 
+
+    exercise=np.maximum(paths[-1]-K, 0)
+    PnL = cash_flow -deltas[len(paths)-1]*paths[len(paths)-1]+exercise
+
+For each realised_vols: we calculate the mean PnL, standard deviation and sampling error of PnL's across all paths:
+
+    mean_PnLs=[] #initialise before the for loop
+    std_PnLs=[]
+    se_PnLs=[]
+
+     exercise=np.maximum(paths[-1]-K, 0) 
+    PnL = cash_flow -deltas[len(paths)-1]*paths[len(paths)-1]+exercise
+    mean_PnLs.append(PnL.mean())
+    std_PnLs.append(PnL.std(ddof=1))
+    se_PnLs.append(PnL.std(ddof=1)/np.sqrt(num_paths))
+
+PnL.mean() automatically calculates the mean PnL and std_PnLs.append(PnL.std(ddof=1)) calculates the standard deviation of PnLs accross all paths for a given realised volatility value. se_PnLs is the sampling error which is calculated by dividing the standard deviatiion by the square root of the number of paths ($\frac{\sigma}{\sqrt{n}}$). If we have a large standard deviation for a small sample size of PnL's, then we can increase num_paths for a smaller sampling error, thus a greater certainty in our calculation for mean PnL's.
+
+For better analysis of results, we fix a matrix of randomly generated numbers on a standard normal distribution before the loop:
+
+       rng = np.random.default_rng(0)
+       Z = rng.standard_normal(size=(num_steps, num_paths))
+
+This ensures that across the sigma_real's, the "paths" matricies have the same stochastic path movements, just scaled differently by sigma_real, ensuring that the differences in PnL mean and PnL SD measurements are only dependant on volatility and are not influenced by noise. Noise in this context refers to the randomness of each Z[i] shock which contributes to sampling variation outside of volatility. By fixing Z across runs, we can isolate the effect of volatility rather than conflating it with sampling variation.
+
 structure: explain how delta is calculated 
 explain trading strategy
 explain method to analyse PnLs
