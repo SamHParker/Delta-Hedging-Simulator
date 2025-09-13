@@ -342,7 +342,7 @@ For each realised_vols: we calculate the mean PnL, standard deviation and sampli
     std_PnLs.append(PnL.std(ddof=1))
     se_PnLs.append(PnL.std(ddof=1)/np.sqrt(num_paths))
 
-PnL.mean() automatically calculates the mean PnL and std_PnLs.append(PnL.std(ddof=1)) calculates the standard deviation of PnLs accross all paths for a given realised volatility value. se_PnLs is the sampling error which is calculated by dividing the standard deviatiion by the square root of the number of paths ($\frac{\sigma}{\sqrt{n}}$). If we have a large standard deviation for a small sample size of PnL's, then we can increase num_paths for a smaller sampling error, thus a greater certainty in our calculation for mean PnL's.
+PnL.mean() automatically calculates the mean PnL and std_PnLs.append(PnL.std(ddof=1)) calculates the standard deviation of PnLs across all paths for a given realised volatility value. se_PnLs is the sampling error which is calculated by dividing the standard deviation of path PnL's by the square root of the number of paths ($\frac{\sigma}{\sqrt{n}}$). If we have a large standard deviation for a small sample size of PnL's, then we can increase num_paths for a smaller sampling error, thus a greater certainty in our calculation for mean PnL's. It's also optimal to increase num_steps as much as possible to replicate continuous hedging as closely as possible. There is a theoretical maximum possible profit for a minimum hedging error for a given path due to delta hedging and this limit is reached as $\lim_{\Delta t \to 0}$.
 
 For better analysis of results, we fix a matrix of randomly generated numbers on a standard normal distribution before the loop:
 
@@ -351,7 +351,5 @@ For better analysis of results, we fix a matrix of randomly generated numbers on
 
 This ensures that across the sigma_real's, the "paths" matricies have the same stochastic path movements, just scaled differently by sigma_real, ensuring that the differences in PnL mean and PnL SD measurements are only dependant on volatility and are not influenced by noise. Noise in this context refers to the randomness of each Z[i] shock which contributes to sampling variation outside of volatility. By fixing Z across runs, we can isolate the effect of volatility rather than conflating it with sampling variation.
 
-structure: explain how delta is calculated 
-explain trading strategy
-explain method to analyse PnLs
+
 
