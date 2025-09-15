@@ -1,9 +1,11 @@
 # Delta-Hedging-Simulator
-A Python script that simulates the dynamic delta hedging of a long non-dividend paying European call option. This project investigates the P&L of a hedging strategy and how it is driven by the difference between the implied volatility, used for option pricing and hedging, and the realised volatility of the simulated path.
+A Python script that simulates the dynamic delta hedging of a long non-dividend paying European call option. 
+
+This project investigates the P&L of a hedging strategy and how it is driven by the difference between the implied volatility, used for option pricing and hedging, and the realised volatility of the simulated path.
 
 In this project we will be exploring the applications of a form of delta hedging wherein we maintain a delta neutral portfolio in order to isolate the affect volatility has on PnL. In this way we are trading volatility rather than stock movement. 
 
-Firstly, I must introduce the Black-Scholes-Merton model used in this project and it's underlying assumptions and the meaning of delta. 
+Firstly, I must introduce the Black-Scholes-Merton model used in this project and the meaning of delta. 
 
 Delta(Δ) measures the sensitivity of the option price to the underlying stock price. Mathematically, it's the partial derivative of option value with respect to stock price. For a call option, Δ ranges from 0 to 1; for a put, from -1 to 0. In Black-Scholes, delta also has a probabilistic interpretation: it can be seen as the approximate probability that the option finishes in the money(eg. -0.25 for put and 0.25 for call delta corresponds to a 25% chance of the option finishing in the money). For call options, delta increases with a stock price increases, reflecting higher probability of the call expiring in the money. For put options, delta decreases with an increase in stock price, reflecting the lower probability of the put expiring in the money. This projects focus is on delta hedging a call European option, a type of option which can only be executed at maturity, but the code can be adapted for a European put option instead.
 
@@ -25,7 +27,7 @@ $$
 S_t = S_0 \exp\left( \left( \mu - \tfrac{1}{2}\sigma^2 \right)t + \sigma W_t \right)
 $$
 
-The derivation above describes the real world evolution of stock price as characterised by the drift term $\mu$. When pricing deivatives such as European call options, we change the measure to the risk-neutral, Q. In this measure, the Black-Scholes assumption of no-arbitrage is satisfied. We will next discuss how path generation is carried out and how call price and delta are calculated in the risk-neutral measure.
+The derivation above describes the real world evolution of stock price as characterised by the drift term $\mu$. When pricing deivatives such as European call options, we change the measure to the risk-neutral measure, Q. In this measure, the Black-Scholes assumption of no-arbitrage is satisfied, allowing us to price derivatives correctly. In this new measure, the only change we make in the equation above is replacing $\mu$ with r, the risk-free rate. We will next discuss how path generation is carried out and how call price and delta are calculated in the risk-neutral measure.
 
 To find a continuous time evolution of stock price $S_t$ under the risk-neutral measure, we need to go back to the real-world $dS_t$ equation and replace $dW_t$ with a new brownian motion $\widetilde{W}_t$ with relation to $dW_t$ described by:
 
