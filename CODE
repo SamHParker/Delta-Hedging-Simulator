@@ -1,0 +1,65 @@
+import numpy as np
+import math
+from scipy.stats import norm
+import matplotlib.pyplot as plt
+import pandas as pd
+
+S0=238
+K=250
+sigma_imp=0.23 #implied volatility
+r=0.0385
+T=1
+
+num_steps=500
+num_paths=500
+
+
+dt=T/num_steps
+paths=np.zeros((num_steps+1, num_paths))
+paths[0]=S0
+
+exp_rdt = np.exp(r*dt)
+
+realised_vols=[.1,.15,.2,.23,.26,.31,.36,.41,.46,.51]
+mean_PnLs=[]
+std_PnLs=[]
+se_PnLs=[]
+rng = np.random.default_rng(0)
+Z= rng.standard_normal(size=(num_steps,num_paths))
+for sigma_real in realised_vols:
+    for t in range(1, num_steps+1):
+        paths[t]=paths[t-1]*np.exp((r-0.5*sigma_real**2)*dt+sigma_real*Z[t-1]*np.sqrt(dt))
+    
+    def delta_calculator(S,K,Tau,r,sigma_imp):
+        d1=((np.log(S/K)+(r+0.5*sigma_imp**2)*Tau)/(sigma_imp*np.sqrt(Tau)))
+        delta=norm.cdf(d1)
+        return delta
+    
+    deltas = np.zeros_like(paths)
+    
+    for i in range(0, num_steps):
+        deltas[i]=delta_calculator(paths[i],K,T-i*dt,r,sigma_imp)
+    deltas[-1]= (paths[-1]>K).astype(float)
+    
+    call_price = S0*norm.cdf((np.log(S0/K)+(r+0.5*sigma_imp**2)*T)/(sigma_imp*np.sqrt(T)))-K*np.exp(-r*T)*norm.cdf(((np.log(S0/K)+(r-0.5*sigma_imp**2)*T)/(sigma_imp*np.sqrt(T))))
+    cash_flow = np.zeros(num_paths)
+    cash_flow[:] = paths[0]*delta0 - call_price
+    
+    for n in range(1, num_steps+1):
+        hedge = paths[n]*(deltas[n]-deltas[n-1])
+        cash_flow *=exp_rdt
+        cash_flow += hedge
+    
+    exercise=np.maximum(paths[-1]-K, 0)
+    PnL = cash_flow -deltas[len(paths)-1]*paths[len(paths)-1]+exercise
+    mean_PnLs.append(PnL.mean())
+    std_PnLs.append(PnL.std(ddof=1))
+    se_PnLs.append(PnL.std(ddof=1)/np.sqrt(num_paths))
+
+df = pd.DataFrame({
+    "Realised Vol": realised_vols,
+    "Mean PnL": np.round(mean_PnLs, 2),
+    "Std PnL": np.round(std_PnLs, 2)
+})
+
+print(df)
