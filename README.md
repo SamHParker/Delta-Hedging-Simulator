@@ -351,6 +351,6 @@ For better analysis of results, we fix a matrix of randomly generated numbers on
 
 This ensures that across the sigma_real's, the "paths" matricies have the same stochastic path movements, just scaled differently by sigma_real, ensuring that the differences in PnL mean and PnL SD measurements are only dependant on volatility and are not influenced by noise. Noise in this context refers to the randomness of each Z[i] shock which contributes to sampling variation outside of volatility. By fixing Z across runs, we can isolate the effect of volatility rather than conflating it with sampling variation.
 
-plt.subtitle("Results")
+plt.subtitle("Results", fontsize=10)
 
 
