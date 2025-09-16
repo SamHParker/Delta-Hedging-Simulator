@@ -9,7 +9,7 @@ Firstly, I must introduce the Black-Scholes-Merton model used in this project an
 
 Delta(Δ) measures the sensitivity of the option price to the underlying stock price. Mathematically, it's the partial derivative of option value with respect to stock price. For a call option, Δ ranges from 0 to 1; for a put, from -1 to 0. In Black-Scholes, delta also has a probabilistic interpretation: it can be seen as the approximate probability that the option finishes in the money(eg. -0.25 for put and 0.25 for call delta corresponds to a 25% chance of the option finishing in the money). For call options, delta increases with a stock price increases, reflecting higher probability of the call expiring in the money. For put options, delta decreases with an increase in stock price, reflecting the lower probability of the put expiring in the money. This projects focus is on delta hedging a call European option, a type of option which can only be executed at maturity, but the code can be adapted for a European put option instead.
 
-The model used to price the call and calculate deltas is the Black-Scholes-Merton model. This model assumes that stock price follows a geometric Brownian motion, meaning returns are normally distributed and prices evolve continuously with both a deterministic drift term $\mu S_t dt$ and a stochastic term $\sigma S_t dW_t$ driven by Weiner process $W_t$:
+The model used to price the call and calculate deltas is the Black-Scholes-Merton model. This model assumes that stock price, $S_t$ follows a geometric Brownian motion, meaning returns are normally distributed and prices evolve continuously with both a deterministic drift term $\mu S_t dt$ and a stochastic term $\sigma S_t dW_t$ driven by Weiner process $W_t$. $\sigma$ is the volatility of the stock price:
 
 $$
 dS_t= \mu S_t dt+ \sigma S_t dW_t
@@ -27,13 +27,15 @@ $$
 S_t = S_0 \exp\left( \left( \mu - \tfrac{1}{2}\sigma^2 \right)t + \sigma W_t \right)
 $$
 
-The derivation above describes the real world evolution of stock price as characterised by the drift term $\mu$. When pricing deivatives such as European call options, we change the measure to the risk-neutral measure, Q. In this measure, the Black-Scholes assumption of no-arbitrage is satisfied, allowing us to price derivatives correctly. In this new measure, the only change we make in the equation above is replacing $\mu$ with r, the risk-free rate. We will next discuss how path generation is carried out and how call price and delta are calculated in the risk-neutral measure.
+The derivation above describes the real world evolution of stock price as characterised by the drift term $\mu$. When pricing deivatives such as European call options, we change the measure to the risk-neutral measure, Q. In this measure, the Black-Scholes assumption of no-arbitrage is satisfied, allowing us to price derivatives correctly. We will next discuss how path generation is carried out and how call price and delta are calculated in the risk-neutral measure.
 
 To find a continuous time evolution of stock price $S_t$ under the risk-neutral measure, we need to go back to the real-world $dS_t$ equation and replace $dW_t$ with a new brownian motion $\widetilde{W}_t$ with relation to $dW_t$ described by:
 
 $$
 d\widetilde{W}_t = dW_t^{\mathbb{P}} + \frac{\mu - r}{\sigma}  dt
 $$
+
+Where r is the risk-free rate.
 
 This gives us a stochastic process for $dS_t$ in the measure Q:
 
