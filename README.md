@@ -24,7 +24,7 @@ $$
 From this, it is clear that due to the derministic dt term and by the fact that $\sigma dW_t$ has a mean of 0 and a variance of $\sigma^2 T$, $\ln\left(\frac{S_t}{S_0}\right)$ follows a normal distribution with mean $(\mu - 0.5 \sigma^2)T$ and a variance of $\sigma^2 T$. We say that stock price has a lognormal distribution because of this. We then exponentiate each side of this equation to get the closed form solution for stock price evolution:
 
 $$
-S_t = S_0 \exp\left( \left( \mu - \tfrac{1}{2}\sigma^2 \right)t + \sigma W_t \right)
+S_t = S_0 e^{ (\mu - frac{1}{2}\sigma^2) t + \sigma W_t }
 $$
 
 The derivation above describes the real world evolution of stock price as characterised by the drift term $\mu$. When pricing deivatives such as European call options, we change the measure to the risk-neutral measure, Q. In this measure, the Black-Scholes assumption of no-arbitrage is satisfied, allowing us to price derivatives correctly. We will next discuss how path generation is carried out and how call price and delta are calculated in the risk-neutral measure.
