@@ -43,7 +43,7 @@ for sigma_real in realised_vols:
     
     call_price = S0*norm.cdf((np.log(S0/K)+(r+0.5*sigma_imp**2)*T)/(sigma_imp*np.sqrt(T)))-K*np.exp(-r*T)*norm.cdf(((np.log(S0/K)+(r-0.5*sigma_imp**2)*T)/(sigma_imp*np.sqrt(T))))
     cash_flow = np.zeros(num_paths)
-    cash_flow[:] = paths[0]*delta0 - call_price
+    cash_flow[:] = paths[0]*delta[0] - call_price
     
     for n in range(1, num_steps+1):
         hedge = paths[n]*(deltas[n]-deltas[n-1])
