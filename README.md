@@ -363,5 +363,5 @@ Hedging error arises because delta hedging is done at discrete time steps rather
 
 We can only add so many paths and steps, until the code becomes too computationally costly to run. So we must strike a balance between computational cost with accuracy. 
 
-My desired maximum sampling error across runs is $SE_max$ = 0.05. The largest PnL standard deviation, $sigma_max$ is roughly 14.7 for $sigma_real = 0.51$ so rearranging the equation for sampling error, $SE = \frac{\sigma}{\sqrt{N}}$ $num_paths_required = math.ceil((sigma_max / SE_max) ** 2)$
+My desired maximum sampling error across runs is $SE_max$ = 0.05. The largest PnL standard deviation, $sigma_max$ is roughly 14.7 for $sigma_real = 0.51$ so rearranging the equation for sampling error, $SE = \frac{\sigma}{\sqrt{N}}$ $N_{\min} = \left\lceil \left(\frac{14.7}{0.05}\right)^2 \right\rceil = \lceil 294^2 \rceil = 86,\!436$
 
