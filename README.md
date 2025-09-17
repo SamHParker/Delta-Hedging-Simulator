@@ -365,9 +365,7 @@ We can only add so many paths and steps, until the code becomes too computationa
 
 My desired maximum sampling error across runs is $SE_{\max}$ = 0.05. The largest PnL standard deviation, $sigma_{\max}$ is roughly 14.7 for $sigma_{\real} = 0.51$ so rearranging the equation for sampling error, $SE = \frac{\sigma}{\sqrt{N}}$, we find the minimum required paths:
 $$
-N_{\min} \;=\; \left\lceil \left(\frac{14.7}{0.05}\right)^2 \right\rceil
-      \;=\; \left\lceil 294^2 \right\rceil
-      \;=\; 86{,}436
+N_{\min} = (\frac{14.7}{0.05})^2 = 294^2 = 86436
 $$
 
 
