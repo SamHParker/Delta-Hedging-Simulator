@@ -357,8 +357,11 @@ This ensures that across the sigma_real's, the "paths" matricies have the same s
 
 ## Results
 
+Before analysing results, we need to ensure they are both accurate and representative. The two main sources of error that can distort our findings are hedging error and sampling error.
 
+Hedging error arises because delta hedging is done at discrete time steps rather than continuously. Increasing num_steps reduces this error and brings the simulation closer to the theoretical limit of continuous hedging. Sampling error arises because we only simuate a finite number of paths. Increasing num_paths enlarges the sample set, reducing the standard error of the estimated mean and standard deviation of PnL for each realised volatility.
 
+We can only add so many paths and steps, until the code becomes too computationally costly to run. So we must strike a balance between computational cost with accuracy. 
 
-
+My desired maximum sampling error across runs is $SE_max$ = 0.05. The largest PnL standard deviation, $sigma_max$ is roughly 14.7 for $sigma_real = 0.51$ so rearranging the equation for sampling error, $SE = \frac{\sigma}{\sqrt{N}}$ $num_paths_required = math.ceil((sigma_max / SE_max) ** 2)
 
