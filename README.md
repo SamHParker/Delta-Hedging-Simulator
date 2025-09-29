@@ -435,7 +435,7 @@ xychart-beta
     line [-12.84, -7.90, -2.96, 0.00, 2.96, 7.88, 12.78, 17.66, 22.51, 27.34]
 ```
 
-This graph shows a linear relationship between realised volatility and mean PnL, which we can interpret as the expected net profit. We are long on volatility with this trading method and the graph makes this apparent. 
+This graph shows a near linear relationship between realised volatility and mean PnL, which we can interpret as the expected net profit. We are long on volatility with this trading method and the graph makes this apparent. 
 
 It is clear from our results that when the market prices volatility correctly for our call (in this case $\sigma_{real}=\sigma_{imp}=0.23$), we neither win nor lose our bet and we should expect approximately zero profit. 
 
