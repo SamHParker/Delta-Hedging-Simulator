@@ -366,3 +366,72 @@ We can only add so many paths and steps, until the code becomes too computationa
 My desired maximum sampling error across runs is $SE_{\max}$ = 0.05. The largest PnL standard deviation, $sigma_{\max}$, is roughly 14.7 for $sigma_{real} = 0.51$ so rearranging the equation for sampling error, $SE = \frac{\sigma}{\sqrt{N}}$, we find the minimum required paths: $N_{\min}$ = $(\frac{sigma_{\max}}{SE_{\max}})^2$ = $(\frac{14.7}{0.05})^2$ = 294^2 = 86436
 
 
+Choosing num_steps proves much harder with my current code. My initial idea was to pick a maximum hedging error via linearising mean PnL as a function of dt, m(dt)=m(0)+dtm'(0) to find an estimate for m(0) by estimating m'(0) using numerical methods to find the average of m(0) over 5 dt inputs around dt=0. The dt used will give the ideal error |m(dt)-m(0)|$<=\frac{SE_(max)}{2}=0.25$. 
+
+The problem is, as we increase the number of steps, we dont seem to see an expected trend of monotonically increasing functions of PnL means across any realised Vols. Even when the shocks matrix is fixed with the maximal num_steps, upon coarsening for smaller steps, the mean PnLs either do not change, or even more confusingly, sometimes decrease. The below code aims to coarsen the shocks matrix to accomodate for nested steps, num_steps=32000, 16000, 8000, 4000, 2000, 1000 so that the delta are hedged along the same paths. We use the seed 0 to ensure that upon re-running, the same random numbers are generated. 
+
+     rng = np.random.default_rng(0) 
+     Z_full = rng.standard_normal((32000, num_paths)) 
+     
+     def coarsen_Z(Z_full, steps): 
+       
+       max_steps = Z_full.shape[0] 
+       block = max_steps // steps 
+       
+       Zc = Z_full.reshape(steps, block, Z_full.shape[1]).sum(axis=1) 
+       Zc = Zc / np.sqrt(block) 
+       return Zc 
+     Zc = coarsen_Z(Z_full, steps=32000) 
+
+Upon collecting results, keeping num_paths at 5000, we can't continue down this path of extrapolating the continuous hedging mean PnL's or conclude anything meaningful at all. The problem may arise from the low num_paths leading to a sampling error which may interfer with results. The hedging method also comes into question as the code multiplies the cash account of the (n-1)th timestep by $e^(rdt)$ at the nth timestep before adding on $S_n(\Delta_n - \Delta_(n-1))$: 
+
+    cash_flow = np.zeros(num_paths) 
+    cash_flow[:] = paths[0]*deltas[0] - call_price 
+
+    for n in range(1, num_steps+1): 
+       hedge = paths[n]*(deltas[n]-deltas[n-1]) 
+       cash_flow *=exp_rdt 
+       cash_flow += hedge
+
+
+For smaller timesteps we collect more interest for an increase in share price as we sell more frequently, but also lose more on a downward turn as we buy more frequently. This might just lead to better rebalancing of our portfolio rather than change very much about the final cash amount accrued by maturity. Frequent hedging as demonstrated in this code further isolates volatility and allows us to trade considering the affect of volatility alone. The num_steps seems then to be less important to the sample set of PnL's per path. The mean PnL's SE are not significantly affected by num_steps and since we are studying these averages, we can be comfortable setting num_steps=3000.
+
+
+Imputing our num_paths and num_steps, we attain 10 mean PnL's across all realised vols:
+
+| Realised Vol|  Mean PnL| Std PnL | SE PnL |
+|-------------|----------|---------|--------|
+| 0.10        | -12.84   | 3.01    | 0.01   |
+| 0.15        | -7.90    | 2.46    | 0.01   |
+| 0.20        | -2.96    | 1.31    | 0.00   |
+| 0.23        | 0.00     | 0.89    | 0.00   |
+| 0.26        | 2.96     | 1.58    | 0.01   |
+| 0.31        | 7.88     | 3.70    | 0.01   |
+| 0.36        | 12.78    | 6.20    | 0.02   |
+| 0.41        | 17.66    | 8.93    | 0.03   |
+| 0.46        | 22.51    | 11.83   | 0.04   |
+| 0.51        | 27.34    | 14.86   | 0.05   |
+
+
+Where Std PnL is the standard deviation and SE is the sampling error of the sample paths PnL's. This is formatted on Python with:
+
+     df = pd.DataFrame({
+    "Realised Vol": realised_vols,
+    "Mean PnL": np.round(mean_PnLs, 2),
+    "Std PnL": np.round(std_PnLs, 2),
+    "SE PnL": np.round(se_PnLs, 2)
+    })
+
+    print(df)
+
+As predicted, the highest SE is 0.05 and it is understandably from the same sample set with the highest standard deviation since $SE = \frac{\sigma}{\sqrt{N}}$. The steady increase in SE from sigma_real=0.23 coincides with the greater varience in sample PnL's as we continue increasing the sigma_real value past simga_real=sigma_imp=0.23.
+
+
+```mermaid
+xychart-beta
+    title "Mean PnL vs Realised Volatility"
+    x-axis "Realised Volatility" [0.10, 0.15, 0.20, 0.23, 0.26, 0.31, 0.36, 0.41, 0.46, 0.51]
+    y-axis "Mean PnL" -15 --> 30
+    line [-12.84, -7.90, -2.96, 0.00, 2.96, 7.88, 12.78, 17.66, 22.51, 27.34]
+```
+
