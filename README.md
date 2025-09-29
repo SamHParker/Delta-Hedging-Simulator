@@ -424,7 +424,7 @@ Where Std PnL is the standard deviation and SE is the sampling error of the samp
 
     print(df)
 
-As predicted, the highest SE is 0.05 and it is understandably from the same sample set with the highest standard deviation since $SE = \frac{\sigma}{\sqrt{N}}$. The steady increase in SE from sigma_real=0.23 coincides with the greater varience in sample PnL's as we continue increasing the sigma_real value past simga_real=sigma_imp=0.23.
+As predicted, the highest SE is 0.05 and it is understandably from the same sample set with the highest standard deviation since $SE = \frac{\sigma}{\sqrt{N}}$. The steady increase in SE from sigma_real=0.23 coincides with the greater varience in sample PnL's as we continue increasing the sigma_real value past $\simga_{real}=\sigma_{imp}=0.23$.
 
 
 ```mermaid
@@ -435,3 +435,16 @@ xychart-beta
     line [-12.84, -7.90, -2.96, 0.00, 2.96, 7.88, 12.78, 17.66, 22.51, 27.34]
 ```
 
+This graph shows a linear relationship between realised volatility and mean PnL, which we can interpret as the expected net profit. We are long on volatility with this trading method and the graph makes this apparent. 
+
+It is clear from our results that when the market prices volatility correctly for our call (in this case $\simga_{real}=\sigma_{imp}=0.23$), we neither win nor lose our bet and we should expect approximately zero profit. 
+
+If realised volatility is lower than implied, we overpay for the call since it was expected by the market to benefit from a greater volatility premium. Conversely, if realised volatility is higher than implied, our call benefits from the higher expected payoff caused by this higher volatility which was not priced into the call at t=0. 
+
+As you see from the formula for call price bellow, the call price grows with sigma_imp:
+
+     call_price = S0*norm.cdf((np.log(S0/K)(r+0.5*sigma_imp**2)*T)/(sigma_imp*np.sqrt(T)))-K*np.exp(-r*T)*norm.cdf(((np.log(S0/K)+(r-0.5*sigma_imp**2)*T)/(sigma_imp*np.sqrt(T))))
+
+The call price grows with sigma_imp and as we increase this term, $C_0$ asymptotically reaches $S_0$ as the cdfs tend to 1 and 0 for the $S_0$ and K terms respectively. 
+
+This demonstrates that volatility has a positive affect on the expected payoff of a call option and with our delta-hedging strategy, this profit depends critically on the accuracy of volatility forecasts. 
