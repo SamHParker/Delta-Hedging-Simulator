@@ -437,7 +437,7 @@ xychart-beta
 
 This graph shows a linear relationship between realised volatility and mean PnL, which we can interpret as the expected net profit. We are long on volatility with this trading method and the graph makes this apparent. 
 
-It is clear from our results that when the market prices volatility correctly for our call (in this case $\simga_{real}=\sigma_{imp}=0.23$), we neither win nor lose our bet and we should expect approximately zero profit. 
+It is clear from our results that when the market prices volatility correctly for our call (in this case $\sigma_{real}=\sigma_{imp}=0.23$), we neither win nor lose our bet and we should expect approximately zero profit. 
 
 If realised volatility is lower than implied, we overpay for the call since it was expected by the market to benefit from a greater volatility premium. Conversely, if realised volatility is higher than implied, our call benefits from the higher expected payoff caused by this higher volatility which was not priced into the call at t=0. 
 
