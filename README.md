@@ -424,7 +424,7 @@ Where Std PnL is the standard deviation and SE is the sampling error of the samp
 
     print(df)
 
-As predicted, the highest SE is 0.05 and it is understandably from the same sample set with the highest standard deviation since $SE = \frac{\sigma}{\sqrt{N}}$. The steady increase in SE from sigma_real=0.23 coincides with the greater varience in sample PnL's as we continue increasing the sigma_real value past $\simga_{real}=\sigma_{imp}=0.23$.
+As predicted, the highest SE is 0.05 and it is understandably from the same sample set with the highest standard deviation since $SE = \frac{\sigma}{\sqrt{N}}$. The steady increase in SE from sigma_real=0.23 coincides with the greater varience in sample PnL's as we continue increasing the sigma_real value past $\sigma_{real}=\sigma_{imp}=0.23$.
 
 
 ```mermaid
