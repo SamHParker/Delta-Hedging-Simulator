@@ -383,7 +383,7 @@ The problem is, as we increase the number of steps, we dont seem to see an expec
        return Zc 
      Zc = coarsen_Z(Z_full, steps=32000) 
 
-Upon collecting results, keeping num_paths at 5000, we can't continue down this path of extrapolating the continuous hedging mean PnL's or conclude anything meaningful at all. The problem may arise from the low num_paths leading to a sampling error which may interfer with results. The hedging method also comes into question as the code multiplies the cash account of the (n-1)th timestep by $e^(rdt)$ at the nth timestep before adding on $S_n(\Delta_n - \Delta_(n-1))$: 
+Upon collecting results, keeping num_paths at 5000, we can't continue down this path of extrapolating the continuous hedging mean PnL's or conclude anything meaningful at all. The problem may arise from the low num_paths leading to a sampling error which may interfer with results. The hedging method also comes into question as the code multiplies the cash account of the (n-1)th timestep by $e^(rdt)$ at the nth timestep before adding on $S_n(\Delta_n - \Delta_{n-1})$: 
 
     cash_flow = np.zeros(num_paths) 
     cash_flow[:] = paths[0]*deltas[0] - call_price 
